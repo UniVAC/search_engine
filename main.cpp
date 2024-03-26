@@ -1,6 +1,6 @@
 #include <iostream>
+#include <boost/asio.hpp>
 #include "nlohmann/json.hpp"
 
 int main(int, char**){
-    std::cout << "Hello, from search_engine!\n";
 }
