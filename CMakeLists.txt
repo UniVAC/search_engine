@@ -5,11 +5,11 @@ include(CTest)
 
 enable_testing()
 
-add_executable(search_engine main.cpp working_with_json.h working_with_json.cpp)
+add_executable(search_engine main.cpp working_with_json.h working_with_json.cpp tests.cpp)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
-set(Boost_INCLUDE_DIR "D:\\boost_1_83_0")
-set(Boost_LIBRARY_DIR "D:\\boost_1_83_0\\stage\\lib")
+set(Boost_INCLUDE_DIR "..\\boost_1_83_0")
+set(Boost_LIBRARY_DIR "..\\boost_1_83_0\\stage\\lib")
 find_package(Boost COMPONENTS REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})
