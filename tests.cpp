@@ -4,5 +4,7 @@
 
 BOOST_AUTO_TEST_CASE(first_test)
 {
-  BOOST_TEST(1 == 1);
+  ConverterJSON file;
+  
+  BOOST_TEST(file.GetResponsesLimit() == 5);
 }

@@ -2,6 +2,7 @@
 #include <vector>
 
 class ConverterJSON{
+public:
     ConverterJSON() = default;
 
     std::vector<std::string> GetTextDocument();
