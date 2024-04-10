@@ -1,3 +1,4 @@
+resources/
 build/
 nlohmann_json/
 .vscode/
