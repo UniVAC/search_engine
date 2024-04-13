@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 #include "working_with_json.h"
 
-
+//getting data from files
 std::vector<std::string> ConverterJSON::GetTextDocument()
 {
     std::vector<std::string> vec_files;
@@ -37,4 +37,20 @@ int ConverterJSON::GetResponsesLimit()
     
     file.close();
     return  conf_file.at("config").at("max_responses");
+};
+
+//receiving requests from a file
+std::vector<std::string> ConverterJSON::GetRequests(){
+    std::vector<std::string> requests;
+
+    std::ifstream file("../requests.json");
+    nlohmann::json requests_file;
+
+    file >> requests_file;
+
+    for(nlohmann::json::iterator it = requests_file.at("requests").begin(); it != requests_file.at("requests").end(); it++){
+        requests.push_back(it.value());
+    }
+
+    return requests;
 };

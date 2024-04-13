@@ -17,3 +17,12 @@ BOOST_AUTO_TEST_CASE(test_GetTextDocument)
 
   BOOST_TEST(file.GetTextDocument() == vec);
 }
+
+BOOST_AUTO_TEST_CASE(test_GetRequests)
+{
+  ConverterJSON file;
+
+  std::vector<std::string> requests{"hello word", "some animals", "test two", "some words"};
+
+  BOOST_TEST(file.GetRequests() == requests);
+}
