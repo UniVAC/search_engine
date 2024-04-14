@@ -4,8 +4,16 @@ project(search_engine VERSION 0.1.0)
 include(CTest)
 
 enable_testing()
-#tests.cpp
-add_executable(search_engine main.cpp working_with_json.h working_with_json.cpp tests.cpp)
+
+add_executable(
+    search_engine
+    main.cpp
+    converterjson.h
+    converterjson.cpp
+    invertedindex.h
+    invertedindex.cpp
+    tests.cpp
+)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 set(Boost_INCLUDE_DIR "..\\boost_1_83_0")

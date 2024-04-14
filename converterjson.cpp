@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
-#include "working_with_json.h"
+#include "converterjson.h"
 
 //getting data from files
 std::vector<std::string> ConverterJSON::GetTextDocument()
