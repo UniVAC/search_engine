@@ -1,35 +1,75 @@
+#include <algorithm>
+#include <thread>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <mutex>
 #include "invertedindex.h"
+#include "converterjson.h"
 
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs){
-    InvertedIndex index;
+    ConverterJSON converterJSON;
+    docs = input_docs;
+    std::vector<std::thread> thread_index;
     
+    for(int i = 0; i <  docs.size(); i++){
+        int number_doc = i;
+        thread_index.emplace_back([this, number_doc](std::string doc_str){
+            std::mutex mut;
+            std::istringstream is_str(doc_str);
+            std::map<std::string, int> count_word;
+
+            do {
+                std::string word;
+                is_str >> word;
+                auto it = count_word.find(word);
+
+                if(it != count_word.end()){
+                    it->second++;
+                }
+                else{
+                    count_word.emplace(word, 1);
+                }
+            }
+            while(is_str);
+            
+            mut.lock();
+            for(auto it = count_word.begin(); it != count_word.end(); it++){
+                Entry entry;
+                entry.count = it->second;
+                entry.doc_id = number_doc;
+
+                if(freq_dictionary.find(it->first) != freq_dictionary.end()){
+                    freq_dictionary.find(it->first)->second.push_back(entry);
+                }
+                else{
+                    freq_dictionary.emplace(it->first, std::vector<Entry> {entry});
+                }
+            }
+            mut.unlock();
+        }, 
+        docs[i]);
+    }
+
+    for(int i = 0; i < thread_index.size(); i++){
+        thread_index[i].join();
+    }
+
+    for(auto it = freq_dictionary.begin(); it != freq_dictionary.end(); it++){
+        std::sort(it->second.begin(), it->second.end());
+    }
 };
 
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word){
-    std::vector<Entry> q_word;
-
-    for(int i = 0; i < docs.size(); i++){
-        int count = 0;
-
-        for (int j = 0; j < docs[i].length() - (word.length() - 1); j++){
-            if (docs[i][j] == word[0]){
-                for (int z = 1; z < word.length(); z++) {
-                    if (docs[i][j + z] != word[z]) break;
-                    if (z == word.length() - 1) count++;
-                }
-            }
-        }
-
-        if(count){
-            Entry some_word = {(size_t)i, (size_t)count};
-            q_word.push_back(some_word);
-        }
-    }
-
-    return q_word;
+    return freq_dictionary.find(word)->second;
 };
 
-//for test
-void InvertedIndex::GetDocs(std::vector<std::string> other){
-    docs = other;
-}
+void InvertedIndex::GetFreq(){
+    for(auto it = freq_dictionary.begin(); it != freq_dictionary.end(); it++){
+        std::cout << it->first << " = ";
+        for(int i = 0; i < it->second.size(); i++){
+            std::cout << "{" << it->second[i].doc_id << ", " << it->second[i].count << "},";
+        }
+        std::cout << std::endl;
+    }
+};

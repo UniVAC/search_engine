@@ -5,8 +5,14 @@
 struct Entry{
     size_t doc_id, count;
 
+    //for tests
     bool operator == (const Entry& other) const {
         return (doc_id == other.doc_id && count == other.count);
+    }
+
+    //for sort
+    bool operator < (const Entry& other) const{
+        return (doc_id < other.doc_id);
     }
 };
 
@@ -18,7 +24,7 @@ public:
 
     std::vector<Entry> GetWordCount (const std::string& word);
 
-    void GetDocs(std::vector<std::string> doc);
+    void GetFreq();
 
 private:
     std::vector<std::string> docs;

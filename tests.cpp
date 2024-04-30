@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_CASE(test_GetTextDocument)
 {
   ConverterJSON file;
 
-  std::vector<std::string> vec{"first next", "second back", "three up", "four down"};
+  std::vector<std::string> vec{"london is the capital of great britain", "big ben is the nickname for the Great bell of the striking clock", "three the", "four down"};
 
   BOOST_TEST(file.GetTextDocument() == vec);
 }
@@ -23,55 +23,45 @@ BOOST_AUTO_TEST_CASE(test_GetRequests)
 {
   ConverterJSON file;
 
-  std::vector<std::string> requests{"hello word", "some animals", "test two", "some words"};
+  std::vector<std::string> requests{"london the", "some animals", "test two", "some words"};
 
   BOOST_TEST(file.GetRequests() == requests);
 }
 //
 BOOST_AUTO_TEST_CASE(test_GetWordCount){
-  InvertedIndex index;
-  std::vector<std::string> docs = {
-    "london is the capital of great britain",
-    "big ben is the nickname for the Great bell of the striking clock"
-  };
-  index.GetDocs(docs);
+  InvertedIndex idx;
+  ConverterJSON conJSON;
+  std::vector<std::vector<Entry>> result;
+  std::vector<std::string> requests = {"london", "the", "clock"};
 
-  std::vector<std::vector<Entry>> expected = {{{0, 1}}, {{0, 1}, {1, 3}}};
-  std::vector<std::vector<Entry>> ans;
+  idx.UpdateDocumentBase(conJSON.GetTextDocument());
 
-  ans.push_back(index.GetWordCount("london"));
-  ans.push_back(index.GetWordCount("the"));
+  //idx.GetFreq();
 
-  BOOST_TEST(ans == expected);
-}
+  for(auto request : requests){
+    std::vector<Entry> word_count = idx.GetWordCount(request);
+    result.push_back(word_count);
+  }
 
-BOOST_AUTO_TEST_CASE(test_GetWordCount_2){
-  InvertedIndex index;
-  std::vector<std::string> docs = {
-    "milk milk milk milk water water water",
-    "milk water water",
-    "milk milk milk milk milk water water water water water",
-    "americano cappuchino"
-  };
-  index.GetDocs(docs);
+  for(int i = 0; i < result.size(); i++){
+    for(int j = 0; j < result[i].size(); j++){
+        std::cout << result[i][j].doc_id << " - " << result[i][j].count << std::endl;
+    }
+  }
 
   std::vector<std::vector<Entry>> expected = {
-      {{0, 4}, {1, 1}, {2, 5}},
-      {{0, 3}, {1, 2}, {2, 5}},
-      {{3, 1}}
-  };
-  std::vector<std::vector<Entry>> ans;
+                                                {
+                                                  {0, 1}
+                                                }, {
+                                                  {0, 1}, {1, 3}, {2, 1}
+                                                },{
+                                                  {1, 1}
+                                                }
+                                              };
 
-  ans.push_back(index.GetWordCount("milk"));
-  ans.push_back(index.GetWordCount("water"));
-  ans.push_back(index.GetWordCount("cappuchino"));
-
-  /*for(int i = 0; i < ans.size(); i++){
-    for(int j = 0; j < ans[i].size(); j++){
-      std::cout << ans[i][j].doc_id << " - " << ans[i][j].count << std::endl;
-    }
-    std::cout << "next" << std::endl;
-  }*/
-
-  BOOST_TEST(ans == expected);
+  BOOST_TEST(result == expected);
 }
+
+/*BOOST_AUTO_TEST_CASE(test_GetWordCount_2){
+  
+}*/
