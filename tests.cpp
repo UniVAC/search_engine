@@ -41,11 +41,11 @@ BOOST_AUTO_TEST_CASE(test_GetWordCount){
     result.push_back(word_count);
   }
 
-  for(int i = 0; i < result.size(); i++){
+  /*for(int i = 0; i < result.size(); i++){
     for(int j = 0; j < result[i].size(); j++){
         std::cout << result[i][j].doc_id << " - " << result[i][j].count << std::endl;
     }
-  }
+  }*/
 
   std::vector<std::vector<Entry>> expected = {
                                                 {

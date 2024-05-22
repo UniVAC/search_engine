@@ -13,6 +13,8 @@ add_executable(
     invertedindex.h
     invertedindex.cpp
     tests.cpp
+    searchserver.h
+    searchserver.cpp
 )
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
