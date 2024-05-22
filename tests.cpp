@@ -36,8 +36,6 @@ BOOST_AUTO_TEST_CASE(test_GetWordCount){
 
   idx.UpdateDocumentBase(conJSON.GetTextDocument());
 
-  //idx.GetFreq();
-
   for(auto request : requests){
     std::vector<Entry> word_count = idx.GetWordCount(request);
     result.push_back(word_count);
