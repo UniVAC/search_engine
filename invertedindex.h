@@ -27,6 +27,6 @@ public:
     void GetFreq();
 
 private:
-    std::vector<std::string> docs;
-    std::map<std::string, std::vector<Entry>> freq_dictionary;
+    std::vector<std::string> docs;  // список содержимого документов
+    std::map<std::string, std::vector<Entry>> freq_dictionary;   // частотный словарь
 };

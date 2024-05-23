@@ -33,11 +33,13 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs){
             }
             while(is_str);
             
-            mut.lock();
+            
             for(auto it = count_word.begin(); it != count_word.end(); it++){
                 Entry entry;
                 entry.count = it->second;
                 entry.doc_id = number_doc;
+
+                mut.lock();
 
                 if(freq_dictionary.find(it->first) != freq_dictionary.end()){
                     freq_dictionary.find(it->first)->second.push_back(entry);
@@ -45,8 +47,10 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs){
                 else{
                     freq_dictionary.emplace(it->first, std::vector<Entry> {entry});
                 }
+
+                mut.unlock();
             }
-            mut.unlock();
+            
         }, 
         docs[i]);
     }
