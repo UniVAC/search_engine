@@ -2,3 +2,5 @@ resources/
 build/
 nlohmann_json/
 .vscode/
+.vs/
+out/
