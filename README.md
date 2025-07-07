@@ -1,4 +1,4 @@
-##Search engine
+## Search engine
 
 Local search engine developed in C++ using CMake
 
