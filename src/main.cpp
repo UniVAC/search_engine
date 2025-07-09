@@ -1,8 +1,8 @@
 #include <iostream>
 #include <exception>
-#include "converterjson.h"
-#include "invertedindex.h"
-#include "searchserver.h"
+#include "../include/converterjson.h"
+#include "../include/invertedindex.h"
+#include "../include/searchserver.h"
 
 int main() {
     try {

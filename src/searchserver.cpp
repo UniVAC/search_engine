@@ -3,8 +3,8 @@
 #include <string>
 #include <algorithm>
 #include <map>
-#include "searchserver.h"
-#include "converterjson.h"
+#include "../include/searchserver.h"
+#include "../include/converterjson.h"
 
 std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<std::string>& quries_input){
     std::vector<std::vector<RelativeIndex>> result;

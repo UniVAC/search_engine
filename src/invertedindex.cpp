@@ -4,8 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <mutex>
-#include "invertedindex.h"
-#include "converterjson.h"
+#include "../include/invertedindex.h"
+#include "../include/converterjson.h"
 
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs){
     ConverterJSON converterJSON;

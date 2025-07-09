@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
-#include "invertedindex.h"
-#include "searchserver.h"
+#include "../include/invertedindex.h"
+#include "../include/searchserver.h"
 #include "gtest/gtest.h"
 
 //test invertedindex

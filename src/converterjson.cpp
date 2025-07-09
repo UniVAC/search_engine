@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iostream>
-#include "converterjson.h"
+#include "../include/converterjson.h"
 #include "nlohmann/json.hpp"
 
 //getting data from files
@@ -8,7 +8,7 @@ std::vector<std::string> ConverterJSON::GetTextDocument()
 {
     std::vector<std::string> vec_files;
 
-    std::ifstream file("..\\config.json");
+    std::ifstream file("config.json");
     if(!file.is_open()) {
         throw std::runtime_error ("config file is missing");
     }
@@ -21,7 +21,8 @@ std::vector<std::string> ConverterJSON::GetTextDocument()
     }
 
     for(int i = 0; i < conf_file.at("files").size(); i++){
-        std::string str = "";
+        std::string str;
+
         std::ifstream file_with_data(conf_file.at("files")[i]);
 
         if(!file_with_data.is_open()){
@@ -40,9 +41,10 @@ std::vector<std::string> ConverterJSON::GetTextDocument()
 
 //get name
 std::string ConverterJSON::GetNameEngine() {
-    std::ifstream file("..\\config.json");
-    nlohmann::json conf_file;
+    std::ifstream file("config.json");
 
+    if(!file.is_open()) std::cout <<"yes";
+    nlohmann::json conf_file;
     file >> conf_file;
 
     file.close();
@@ -52,7 +54,7 @@ std::string ConverterJSON::GetNameEngine() {
 //get max answers
 int ConverterJSON::GetResponsesLimit()
 {
-    std::ifstream file("..\\config.json");
+    std::ifstream file("config.json");
     nlohmann::json conf_file;
 
     file >> conf_file;
@@ -65,7 +67,7 @@ int ConverterJSON::GetResponsesLimit()
 std::vector<std::string> ConverterJSON::GetRequests(){
     std::vector<std::string> requests;
 
-    std::ifstream file("..\\requests.json");
+    std::ifstream file("requests.json");
     nlohmann::json requests_file;
 
     file >> requests_file;
